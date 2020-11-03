@@ -48,33 +48,33 @@ CC = 4187
 
 FV = (CVV*0.001)/(np.pi*(D/2)**2)
 #flow velocity of coolant m/s
-print (FV)
+print ("flow velocity:", FV)
 
 KV = DV/PC
 #coolant kinematic viscosity
-print (KV)
+print ("kinematic viscosity:", KV)
 
 RE = FV*D/KV
 #Reynolds number of coolant
-print (RE)
+print ("Reynolds number:", RE)
 
 PR = DV*CC/KC
 #Prandl number of coolant
-print (PR)
+print ("Prandl number:", PR)
 
 h = (KC/D)*(0.023*RE**0.8)*PR**0.4
 #Heat transfer coefficient
-print (h)
+print ("heat transfer coefficient:", h)
 
 TM = PP*CP*LP*(2.0*KM*W + h*D*LM*np.pi)*(TMelt - TEject)
 TM = TM/(h*D*KM*TCycle*np.pi)
 TM = TM + TC
 #Temperature of the mold
-print (TM)
+print ("temperature of the mold:", TM)
 
 TConstant = ((PM*CM*LM**2)/KM)*(1+(2.0*W*KM)/(h*D*LM*np.pi))
 #Time constant
-print (TConstant)
+print ("time constant:", TConstant)
 
 x = np.linspace(0,100)
 y = TM + ((TMO-TM)*math.e**(-x/TConstant))
