@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-%matplotlib inline
 
 import math
 from scipy.integrate import odeint
