@@ -7,6 +7,7 @@ import numpy as np
 
 from scipy.integrate import odeint
 
+heat_coefficient_correlation = input ("D for Dittus-Boelter, G for Gnielinski: ")
 TC = 15.
 #coolant temperature celsius
 PP = 980.
@@ -45,6 +46,8 @@ PC = 998.2
 #coolant density
 CC = 4187
 #specific heat capacity of coolant
+fancye = 0.00001
+#average height of pipe surface irregularities (m)
 
 FV = (CVV*0.001)/(np.pi*(D/2)**2)
 #flow velocity of coolant m/s
@@ -62,7 +65,17 @@ PR = DV*CC/KC
 #Prandl number of coolant
 print ("Prandl number:", PR)
 
-h = (KC/D)*(0.023*RE**0.8)*PR**0.4
+DF = 0.0055*(1+((2*(10**4)*(fancye/D)+((10**6)/RE))**(1/3)))
+#Darcy friction factor
+print ("Darcy friction factor:", DF)
+
+if heat_coefficient_correlation == "D":
+    chosenNU = (0.023*RE**0.8)*PR**0.4
+elif heat_coefficient_correlation == "G":
+        chosenNU = ((DF/8)*(RE-1000)*PR)/(1+(12.7*((DF/8)**0.5)*(PR**(2/3)-1)))
+#chosen correlation to Nusselt number
+
+h = (KC/D)* chosenNU
 #Heat transfer coefficient
 print ("heat transfer coefficient:", h)
 
