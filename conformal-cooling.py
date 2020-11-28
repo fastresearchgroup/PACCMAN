@@ -7,6 +7,9 @@ import numpy as np
 
 from scipy.integrate import odeint
 
+heat_coefficient_correlation = input ("Please choose a heat transfer correllation. D for Dittus-Boelter, G for Gnielinski, S for Sieder-Tate: ")
+savegraphs = input ("Would you like to save an image of the average cycle temperature graphs? Y for yes, N for no: ")
+
 TC = 15.
 #coolant temperature celsius
 PP = 980.
