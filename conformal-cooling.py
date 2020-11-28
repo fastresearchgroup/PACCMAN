@@ -52,6 +52,8 @@ CC = 4187
 #specific heat capacity of coolant
 fancye = 0.00015
 #average height of pipe surface irregularities (m)
+L = 1.15
+#coolant line length (m)
 
 FV = (CVV*0.001)/(np.pi*(D/2)**2)
 #flow velocity of coolant m/s
@@ -103,3 +105,7 @@ plt.axis([0,100,0,35])
 if savegraphs == "Y":
 	plt.savefig("conformal-cooling.png")
 	plt.savefig("conformal-cooling.eps")
+	
+pdrop = (DF*L/D)*(PC/2)*CVV**2
+#coolant pressure drop
+print ("coolant pressure drop:", pdrop)
