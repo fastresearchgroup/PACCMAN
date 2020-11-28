@@ -96,7 +96,7 @@ TConstant = ((PM*CM*LM**2)/KM)*(1+(2.0*W*KM)/(h*D*LM*np.pi))
 print ("time constant:", TConstant)
 
 x = np.linspace(0,100)
-y = TM + ((TMO-TM)*math.e**(-x/TConstant))
+y = TM + ((TMO-TM)*math.e**(-x/TConstant)) 
 plt.plot(x,y,'r')
 plt.axis([0,100,0,35])
 
