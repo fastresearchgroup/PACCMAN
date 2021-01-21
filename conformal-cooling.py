@@ -220,12 +220,12 @@ if programfunction == "M" or programfunction == "m":
     print ("temperature of the mold (",moldmatname3,"):", ATM3)
 elif programfunction == "H" or programfunction == "h":
     ATM1 = PP*CP*LP*(2.0*KM1*W + h1*D*LM*np.pi)*(TMelt - TEject)
-    ATM2 = PP*CP*LP*(2.0*KM1*W + h2*D*LM*np.pi)*(TMelt - TEject)
-    ATM3 = PP*CP*LP*(2.0*KM1*W + h3*D*LM*np.pi)*(TMelt - TEject)
+    ATM2 = PP*CP*LP*(2.0*KM2*W + h2*D*LM*np.pi)*(TMelt - TEject)
+    ATM3 = PP*CP*LP*(2.0*KM3*W + h3*D*LM*np.pi)*(TMelt - TEject)
     
     ATM1 = ATM1/(h1*D*KM1*TCycle*np.pi)
-    ATM2 = ATM2/(h2*D*KM1*TCycle*np.pi)
-    ATM3 = ATM3/(h3*D*KM1*TCycle*np.pi)
+    ATM2 = ATM2/(h2*D*KM2*TCycle*np.pi)
+    ATM3 = ATM3/(h3*D*KM3*TCycle*np.pi)
     
     ATM1 = ATM1 + TC
     ATM2 = ATM2 + TC
@@ -322,17 +322,23 @@ elif programfunction == "H" or programfunction == "h" or programfunction == "N" 
 
 #unit testing:
 def testATM1():
+	global ATM1
 	ATM1Test = ATM1
 	ATM1 = PP*CP*LP*(2.0*KM1*W + h1*D*LM*np.pi)*(TMelt - TEject)
 	ATM1 = (ATM1/(h1*D*KM1*TCycle*np.pi)) + TC
 	assert ATM1Test == ATM1
 def testATM2():
+	global ATM2
 	ATM2Test = ATM2
-	ATM12 = PP*CP*LP*(2.0*KM2*W + h2*D*LM*np.pi)*(TMelt - TEject)
+	ATM2 = PP*CP*LP*(2.0*KM2*W + h2*D*LM*np.pi)*(TMelt - TEject)
 	ATM2 = (ATM2/(h2*D*KM2*TCycle*np.pi)) + TC
 	assert ATM2Test == ATM2
 def testATM3():
+	global ATM3
 	ATM3Test = ATM3
 	ATM3 = PP*CP*LP*(2.0*KM3*W + h3*D*LM*np.pi)*(TMelt - TEject)
 	ATM3 = (ATM3/(h3*D*KM3*TCycle*np.pi)) + TC
 	assert ATM3Test == ATM3
+testATM1()
+testATM2()
+testATM3()
