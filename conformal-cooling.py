@@ -241,11 +241,11 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 
 	x = np.linspace(0,100)
 
-	y1 = ATM1 + ((testTMO-ATM1)*np.e**(-x/TConstant1))
+	y1 = ATM1 + ((TMO-ATM1)*np.e**(-x/TConstant1))
 	if programfunction == "M" or programfunction == "m" or programfunction == "H" or programfunction == "h":
-		y2 = ATM2 + ((testTMO-ATM2)*np.e**(-x/TConstant2))
+		y2 = ATM2 + ((TMO-ATM2)*np.e**(-x/TConstant2))
 	if programfunction == "M" or programfunction == "m" or programfunction == "H" or programfunction == "h":
-		y3 = ATM3 + ((testTMO-ATM3)*np.e**(-x/TConstant3))
+		y3 = ATM3 + ((TMO-ATM3)*np.e**(-x/TConstant3))
 
 	if programfunction == "M" or programfunction == "m":
 		plt.plot(x,y1,'r', ls=('dotted'), label=moldmatname1)
@@ -271,7 +271,7 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 
 	if programfunction == "M" or "m":
 		pdrop1 = pdropfunc(DF1,L,D,PC,CVV)
-		pdrop2 = pdropfunc(DF2,LD,PC,CVV)
+		pdrop2 = pdropfunc(DF2,L,D,PC,CVV)
 		pdrop3 = pdropfunc(DF3,L,D,PC,CVV)
 
 		print ("coolant pressure drop (",moldmatname1,"):", pdrop1)
