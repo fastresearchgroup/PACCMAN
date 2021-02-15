@@ -52,7 +52,6 @@ testCC = 4187
 testL = 1.15
 #coolant line length
 
-add
 moldmatname1 = "316 Steel" 
 #name of first mold material
 moldmatname2 = "6061 Aluminum"
