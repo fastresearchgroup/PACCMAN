@@ -13,8 +13,6 @@ if programfunction == "N" or programfunction == "n":
 
 #general note: when programfunction = N or H, the first choice of mold material properties is used (KM1, PM1, etc.)
 
-import test
-
 TC = 15.
 #coolant temperature celsius
 PP = 980.
