@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-programfunction = input('What would you like to use this program for? M for mold material comparison, H for heat transfer coefficient comparison, N for simple data from a single mold material and user choice of heat transfer coefficient, T for initializing unit testing: ' )
+programfunction = input('What would you like to use this program for? M for mold material comparison, H for heat transfer coefficient comparison, N for simple data from a single mold material and user choice of heat transfer coefficient: ' )
 
 
 if programfunction == "N" or programfunction == "n": 
@@ -13,8 +13,7 @@ if programfunction == "N" or programfunction == "n":
 
 #general note: when programfunction = N or H, the first choice of mold material properties is used (KM1, PM1, etc.)
 
-import test
-
+#changable variables
 TC = 15.
 #coolant temperature celsius
 PP = 980.
@@ -284,31 +283,5 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 
 	#coolant pressure drop
 
-	
-	
-	
-	
-#testing
-elif programfunction == "T" or programfunction == "t": 
-	testFV = FVfunc(test.testCVV, test.testD)
-	assert testFV == 11.561015066195278
-	testKV = KVfunc(test.testDV,test.testPC)
-	assert testKV == 1.0038068523342016e-06
-	testRE = REfunc(testFV,test.testD,testKV)
-	assert testRE == 57585.854486407814
-	testPR = PRfunc(test.testDV,test.testCC,test.testKC)
-	assert testPR == 7.089175397093613
-	testDF = DFfunc(test.testfancye,test.testD,testRE)
-	assert testDF == 0.010906214575733224
-	testh = htc(test.testKC,test.testD,GNU(testDF,testRE,testPR))
-	assert testh == 28621.292587276246
-	testATM = ATMfunc(test.testPP,test.testCP,test.testLP,test.testKM,test.testW,testh,test.testD,test.testLM,test.testTMelt,test.testTEject,test.testTCycle,test.testTC)
-	assert testATM == 19.207173469816603
-	testTConstant = TConstantfunc(test.testPM,test.testCM,test.testLM,test.testKM,test.testW,testh,test.testD)
-	assert testTConstant == 4.641400260500878
-	testpdrop = pdropfunc(testDF,test.testL,test.testD,test.testPC,test.testCVV)
-	assert testpdrop == 64.51209687989939
-	print("Testing complete")
-else:
-	print("invalid input")
+
 	
