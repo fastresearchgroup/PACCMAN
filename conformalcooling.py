@@ -109,13 +109,16 @@ def DFfunc(fancye,D,RE):
 
 def DBNU(RE,PR):
 	NU = (0.023*RE**0.8)*PR**0.4
+#Ditus-Boelter heat transfer coefficent correlation
 	return NU
 def GNU(DF,RE,PR):
 	NU = ((DF/8)*(RE-1000)*PR)/(1+(12.7*((DF/8)**0.5)*(PR**(2/3)-1)))
 	return NU
+#Gnielinski heat transfer coefficent correlation
 def STNU(RE,PR,DV,WDV):
 	NU = 0.027*(RE**(4/5))*(PR**(1/3))*((DV/WDV)**0.14)
 	return NU
+#Sieder-Tate heat transfer coefficent correlation
 	
 def htc(KC,D,NU):
 	h = (KC/D)* NU
@@ -126,15 +129,16 @@ def ATMfunc(PP,CP,LP,KM,W,h,D,LM,TMelt,TEject,TCycle,TC):
 	ATM = PP*CP*LP*(2.0*KM*W + h*D*LM*np.pi)*(TMelt - TEject)
 	ATM = ATM/(h*D*KM*TCycle*np.pi) + TC
 	return ATM
-	
+#Average temperature of the mold
+
 def TConstantfunc(PM,CM,LM,KM,W,h,D):
 	TConstant = ((PM*CM*LM**2)/KM)*(1+(2.0*W*KM)/(h*D*LM*np.pi))
 	return TConstant
-		
+#Time constant
 def pdropfunc(DF,L,D,PC,CVV):
 	pdrop = (DF*L/D)*(PC/2)*CVV**2
 	return pdrop
-
+#Pressure drop
 	
 if programfunction == "M" or programfunction == "m" or programfunction == "N" or programfunction == "n" or programfunction == "H" or programfunction == "h":
 	savegraphs = input ("Would you like to save an image of the graphs? Y for yes, N for no: ")
@@ -237,7 +241,22 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("time constant", TConstant1)
 
 	#Time constant
+	
+	if programfunction == "M" or "m":
+		pdrop1 = pdropfunc(DF1,L,D,PC,CVV)
+		pdrop2 = pdropfunc(DF2,L,D,PC,CVV)
+		pdrop3 = pdropfunc(DF3,L,D,PC,CVV)
 
+		print ("coolant pressure drop (",moldmatname1,"):", pdrop1)
+		print ("coolant pressure drop (",moldmatname2,"):", pdrop2)
+		print ("coolant pressure drop (",moldmatname3,"):", pdrop3)
+
+	elif programfunction == "H" or "h" or "N" or "n":
+		pdrop1 = pdropfunc(DF1,L,D,PC,CVV)
+		print ("coolant pressure drop:", pdrop1)
+
+		#coolant pressure drop
+		
 	x = np.linspace(0,100)
 
 	y1 = ATM1 + ((TMO-ATM1)*np.e**(-x/TConstant1))
@@ -268,20 +287,8 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		plt.savefig("conformal-cooling-comparison.png")
 		plt.savefig("conformal-cooling-comparison.eps")
 
-	if programfunction == "M" or "m":
-		pdrop1 = pdropfunc(DF1,L,D,PC,CVV)
-		pdrop2 = pdropfunc(DF2,L,D,PC,CVV)
-		pdrop3 = pdropfunc(DF3,L,D,PC,CVV)
-
-		print ("coolant pressure drop (",moldmatname1,"):", pdrop1)
-		print ("coolant pressure drop (",moldmatname2,"):", pdrop2)
-		print ("coolant pressure drop (",moldmatname3,"):", pdrop3)
-
-	elif programfunction == "H" or "h" or "N" or "n":
-		pdrop1 = pdropfunc(DF1,L,D,PC,CVV)
-		print ("coolant pressure drop:", pdrop1)
-
-	#coolant pressure drop
+else:
+		print ("invalid program function selection")
 
 
 	
