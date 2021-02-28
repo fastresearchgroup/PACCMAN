@@ -1,3 +1,9 @@
+from _pytest.monkeypatch import MonkeyPatch
+
+def test_input(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: "M")
+test_input(MonkeyPatch())
+
 testTC = 15.
 #coolant temperature celsius
 testPP = 980.
