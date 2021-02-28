@@ -3,7 +3,6 @@ import numpy as np
 
 programfunction = input('What would you like to use this program for? M for mold material comparison, H for heat transfer coefficient comparison, N for simple data from a single mold material and user choice of heat transfer coefficient: ' )
 
-
 if programfunction == "N" or programfunction == "n": 
     heat_coefficient_correlation = input("Please choose a heat transfer correllation. D for Dittus-Boelter, G for Gnielinski, S for Sieder-Tate: ")
 
