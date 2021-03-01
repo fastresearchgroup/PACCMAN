@@ -3,3 +3,5 @@ __pycache__/
 .aux
 .gz
 .tex
+.eps
+.png
