@@ -1,8 +1,8 @@
-.pytest_cache
+*.pytest_cache
 __pycache__/
-.aux
-.gz
-.tex
-.eps
-.png
-.log
+*.aux
+*.gz
+*.tex
+*.eps
+*.png
+*.log
