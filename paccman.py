@@ -283,8 +283,8 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 	plt.legend()
 
 	if savegraphs == "Y" or savegraphs == "y":
-		plt.savefig("conformal-cooling-comparison.png")
-		plt.savefig("conformal-cooling-comparison.eps")
+		plt.savefig("paccman.png")
+		plt.savefig("paccman.eps")
 
 else:
 		print ("invalid program function selection")
