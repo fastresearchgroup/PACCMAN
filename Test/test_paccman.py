@@ -49,16 +49,16 @@ testfancye = 0.00015
 testKM = 16.5
 #First comparison thermal conductivity of mold: 316 steel
 
-from paccman import FVfunc
-from paccman import KVfunc
-from paccman import REfunc
-from paccman import PRfunc
-from paccman import DFfunc
-from paccman import htc
-from paccman import GNU
-from paccman import ATMfunc
-from paccman import TConstantfunc
-from paccman import pdropfunc
+from ..paccman import FVfunc
+from ..paccman import KVfunc
+from ..paccman import REfunc
+from ..paccman import PRfunc
+from ..paccman import DFfunc
+from ..paccman import htc
+from ..paccman import GNU
+from ..paccman import ATMfunc
+from ..paccman import TConstantfunc
+from ..paccman import pdropfunc
 
 class TestClass:
 
