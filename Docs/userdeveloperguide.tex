@@ -7,6 +7,8 @@
 \usepackage{sidecap}
 \usepackage{graphicx}
 \usepackage[document]{ragged2e}
+\usepackage{amsmath}
+\DeclareMathSizes{12}{10}{10}{6}
 \usepackage{geometry}
  \geometry{
  top=35mm,
@@ -100,5 +102,112 @@ Once the calculations are completed, the program creates a plot of the average h
 \medskip
 
 The program can be tested using Pytest by running the "pytest" command in the program's directory.
+
+\clearpage
+
+\section*{Variables Used:}
+
+\medskip
+
+Part Thickness: $L_{P}$
+
+Coolant Line Diameter: $D$
+
+Average Height of Coolant Line Surface Irregularties: $\varepsilon$
+
+Coolant Line Length: $L$
+
+Coolant Thermal Conductivity: $K_{C}$
+
+Coolant Density: $\rho_{C}$
+
+Mold Specific Heat Capacity: $C_{C}$
+
+Coolant Temperature: $T_{C}$
+
+Part Density: $\rho_{P}$
+
+Part Specific Heat Capacity: $C_{P}$
+
+Thermal Conductivity of Mold: $K_{M}$
+
+Coolant Line Pitch Distance: $W$
+
+Distance from Coolant Line to Mold Wall: $L_{M}$
+
+Difference in Part Temperature Between Inserted Into Mold and Released: $T$
+
+Cycle Time: $T_{Cycle}$
+
+Mold Density: $\rho_{M}$
+
+Mold Specific Heat Capacity: $C_{M}$
+
+Initial Mold Temperature: $T_{MO}$
+
+Coolant Flow Rate: $\dot{V}$
+
+Coolant Dynamic Viscosity: $\mu$
+
+Coolant Dynamic Viscosity When Near Wall: $\mu_{W}$
+
+\clearpage
+
+\section*{Equations Used:}
+
+\medskip
+
+Flow Velocity of Coolant (U): $\dfrac{\dot{V}}{\pi \cdot (\dfrac{D}{2})^{2}}$
+
+\medskip
+
+Coolant Kinematic Viscosity (KV): $\dfrac{\mu}{\rho_{C}}$
+
+\medskip
+
+Reynolds Number (Re): $\dfrac{U \cdot D}{KV}$
+
+\medskip
+
+Prandtl Number (Pr): $\dfrac{\mu \cdot C_{C}}{K_{C}}$
+
+\medskip
+
+Darcy Friction Factor (Haaland Equation) (f): $(\dfrac{1}{-1.8log[(\dfrac{\varepsilon}{3.7 \cdot D})^{1.11}+(\dfrac{6.9}{Re})]})^{2}$
+
+\medskip
+
+There are three chooseable equations for the Nusselt Number (Nu):
+
+1. Dittus-Boelter: $0.023 \cdot Re^{\frac{4}{5}} \cdot Pr^{0.4}$
+
+\medskip
+
+2. Gnielinski: $\dfrac{\dfrac{f}{8} \cdot (Re-1000) \cdot Pr}{1 + [12.7 \cdot (\dfrac{f}{8})^{0.5} \cdot (Pr^{\frac{2}{3}}-1)]}$
+
+\medskip
+
+3. Sieder-Tate: $0.027 \cdot Re^{\frac{4}{5}} \cdot Pr^{\frac{1}{3}} \cdot (\frac{\mu}{\mu_{W}})^{0.14}$
+
+\medskip
+
+Heat Transfer Coefficient (h): $\dfrac{K_{C}}{D} \cdot Nu$
+
+\medskip
+
+Average Temperature of the Mold (ATM): $T_{C} + \dfrac{\rho_{P} \cdot C_{P} \cdot L_{P} \cdot T \cdot [(2 \cdot K_{M} \cdot W) + (h \cdot \pi \cdot D \cdot L_{M})]}{h \cdot \pi \cdot D \cdot K_{M} \cdot T_{Cycle}}$ 
+
+\medskip
+
+Time Constant ($T_{Constant}$): $\dfrac{\rho_{M} \cdot C_{M} \cdot L_{M}^{2}}{K_{M}} \cdot (1 + \dfrac{2 \cdot W \cdot K_{M}}{h \cdot \pi \cdot D \cdot L_{M}})$
+
+\medskip
+
+Pressure Drop: $\dfrac{Df \cdot L}{D} \cdot \dfrac{\rho_{C}}{2} \cdot \dot{V}^{2}$
+
+\medskip
+
+Equation for Graphs: $y = ATM + (T_{MO} - ATM) \cdot e^{\dfrac{-x}{T_{Constant}}}$
+
 
 \end{document}
