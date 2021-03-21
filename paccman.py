@@ -38,7 +38,7 @@ def DFfunc(fancye,D,RE):
 
 def DBNU(RE,PR):
 	NU = (0.023*RE**0.8)*PR**0.4
-#Ditus-Boelter heat transfer coefficent correlation
+#Dittus-Boelter heat transfer coefficent correlation
 	return NU
 def GNU(DF,RE,PR):
 	NU = ((DF/8)*(RE-1000)*PR)/(1+(12.7*((DF/8)**0.5)*(PR**(2/3)-1)))
@@ -88,15 +88,15 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 	DF1 = DFfunc(data.mat1fancye,data.D,RE)
 	print ("Darcy friction factor (",data.moldmatname1,"):", DF1)
 
-	if programfunction == "M" or "m":
+	if programfunction == "M" or programfunction == "m":
 		DF2 = DFfunc(data.mat2fancye,data.D,RE)
 		print ("Darcy friction factor (",data.moldmatname2,"):", DF2)
-	if programfunction == "M" or "m":
+	if programfunction == "M" or programfunction == "m":
 		DF3 = DFfunc(data.mat3fancye,data.D,RE)   
 		print ("Darcy friction factor (",data.moldmatname3,"):", DF3)
    
    
-	if programfunction == "M" or "m": 
+	if programfunction == "M" or programfunction == "m": 
 		h1 = htc(data.KC,data.D,GNU(DF1,RE,PR))
 		print ("heat transfer coefficient (",data.moldmatname1,"):", h1)
 		h2 = htc(data.KC,data.D,GNU(DF2,RE,PR))
@@ -105,7 +105,7 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("heat transfer coefficient (",data.moldmatname3,"):", h3)
 
 		
-	elif programfunction == "H" or "h":
+	elif programfunction == "H" or programfunction == "h":
 		h1 = htc(data.KC,data.D,DBNU(RE,PR))
 		print ("heat transfer coefficient (Ditus-Boelter):", h1)
 		h2 = htc(data.KC,data.D,GNU(DF1,RE,PR))
@@ -114,7 +114,7 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("heat transfer coefficient (Sieder-Tate):", h3)
 	
 	
-	elif programfunction == "N" or "n":
+	elif programfunction == "N" or programfunction == "n":
 		if heat_coefficient_correlation == "D":
 			h1 = htc(data.KC,data.D,DBNU(RE,PR))
 			print ("heat transfer coefficient", h1)
@@ -126,7 +126,7 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 			print ("heat transfer coefficient", h3)
 	
 
-	if programfunction == "M" or "m": 
+	if programfunction == "M" or programfunction == "m": 
 		ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
 		print ("temperature of the mold (",data.moldmatname1,"):", ATM1)
 		ATM2 = ATMfunc(data.PP,data.CP,data.LP,data.mat2KM,data.W,h2,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
@@ -135,7 +135,7 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("temperature of the mold (",data.moldmatname3,"):", ATM3)
 
 		
-	elif programfunction == "H" or "h":
+	elif programfunction == "H" or programfunction == "h":
 		ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
 		print ("temperature of the mold (Ditus-Boelter):", ATM1)
 		ATM2 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h2,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
@@ -144,13 +144,13 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("temperature of the mold (Sieder-Tate):", ATM3)
     
 	
-	elif programfunction == "N" or "n":
+	elif programfunction == "N" or programfunction == "n":
 		ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
 		print ("temperature of the mold:", ATM1)
 	#Average temperature of the mold
 	
 
-	if programfunction == "M" or "m":
+	if programfunction == "M" or programfunction == "m":
 		TConstant1 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h1,data.D)
 		TConstant2 = TConstantfunc(data.mat2PM,data.mat2CM,data.LM,data.mat2KM,data.W,h2,data.D)
 		TConstant3 = TConstantfunc(data.mat3PM,data.mat3CM,data.LM,data.mat3KM,data.W,h3,data.D)
@@ -158,7 +158,7 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("time constant (",data.moldmatname2,"):", TConstant2)
 		print ("time constant (",data.moldmatname3,"):", TConstant3)
 		
-	elif programfunction == "H" or "h":
+	elif programfunction == "H" or programfunction == "h":
 		TConstant1 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h1,data.D)
 		TConstant2 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h2,data.D)
 		TConstant3 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h3,data.D)
@@ -166,13 +166,13 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("time constant (Gnielinski):", TConstant2)
 		print ("time constant (Sieder-Tate):", TConstant3)
 		
-	elif programfunction == "N" or "n":
+	elif programfunction == "N" or programfunction == "n":
 		TConstant1 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h1,data.D)
 		print ("time constant", TConstant1)
 
 	#Time constant
 	
-	if programfunction == "M" or "m":
+	if programfunction == "M" or programfunction == "m":
 		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,data.CVV)
 		pdrop2 = pdropfunc(DF2,data.L,data.D,data.PC,data.CVV)
 		pdrop3 = pdropfunc(DF3,data.L,data.D,data.PC,data.CVV)
@@ -181,7 +181,7 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 		print ("coolant pressure drop (",data.moldmatname2,"):", pdrop2)
 		print ("coolant pressure drop (",data.moldmatname3,"):", pdrop3)
 
-	elif programfunction == "H" or "h" or "N" or "n":
+	elif programfunction == "H" or programfunction == "h" or programfunction == "N" or programfunction == "n":
 		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,data.CVV)
 		print ("coolant pressure drop:", pdrop1)
 
