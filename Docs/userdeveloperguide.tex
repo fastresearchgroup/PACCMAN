@@ -71,17 +71,21 @@ Choosing "N" will not download the graphs
 The program is written so that by changing the variables, it can analyize any desired conformal cooling design and will report the following data: 
 \begin{adjustwidth}{1cm}{}
 
-flow velocity, kinematic viscosity, Reynolds number, Prandl number, Farcy friction factor, heat transfer coefficient, average heat cycle temperature of the mold, time constant, and coolant pressure drop.
+flow velocity, kinematic viscosity, Reynolds number, Prandl number, Darcy friction factor, heat transfer coefficient, average heat cycle temperature of the mold, time constant, and coolant pressure drop.
 \end{adjustwidth}
 \clearpage
 
 \section*{Application Fundamentals for Advanced Use:}
 
-At the beginning, the program initializes and assigns all the basic variables. These can all be changed, or the list can be added to in order to improve the function of the program. However, they are all necessary for the program to function properly so should not be completely omitted.
+At the beginning, the program initializes and assigns all the basic variables. By default, these are imported from the "basedata.py" file. 
 
 \medskip
 
-Afterwards, all the necessary functions are defined. Similarly, these cannot be removed as they are necessary for the program’s function but could be added to.
+In order to change the values, the data in this file can either be edited directly or the import location can be changed. In order to do this, locate the import statement on line 12 of "paccman.py" and change "basedata" to the desired new file. All of the variables in "basedata.py" are necessary for the program to function properly so none should not be completely omitted if a new file is used.
+
+\medskip
+
+Afterwards, all the necessary functions are defined. These cannot be removed as they are necessary for the program’s function but could be added to.
 
 \medskip
 
