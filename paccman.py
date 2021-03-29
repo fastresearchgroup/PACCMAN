@@ -6,80 +6,10 @@ programfunction = input('What would you like to use this program for? M for mold
 if programfunction == "N" or programfunction == "n": 
     heat_coefficient_correlation = input("Please choose a heat transfer correllation. D for Dittus-Boelter, G for Gnielinski, S for Sieder-Tate: ")
 
-
-
-
-
 #general note: when programfunction = N or H, the first choice of mold material properties is used (KM1, PM1, etc.)
 
-#changable variables
-TC = 15.
-#coolant temperature celsius
-PP = 980.
-#density of plastic part kg/m^3
-CP = 1300.
-#specific heat capacity of plastic part J/KG*K
-LP = 0.001
-#half the plastic part thickness m
-W = 0.010
-#cooling line pitch distance m
-D = 0.005
-#cooling line diameter m
-LM = 0.004
-#distance from cooling line to mold wall
-TMelt = 180.
-#Part melted temperature
-TEject = 64.9
-#Part ejection temperature
-TCycle = 10.
-#Cycle time seconds
-TMO = 13.
-#Initial mold temperature
-CVV = 0.227
-#coolant velocity liters/sec
-DV = 1.002 * 10**-3
-#coolant dynamic viscosity
-WDV = 0.0009775
-#coolant dynamic viscosity when near wall
-KC = 0.5918
-#thermal conductivity of coolant
-PC = 998.2
-#coolant density
-CC = 4187
-#specific heat capacity of coolant
-L = 1.15
-#coolant line length
-
-moldmatname1 = "316 Steel" 
-#name of first mold material
-moldmatname2 = "6061 Aluminum"
-#name of second mold material
-moldmatname3 = "Copper"
-#name of third mold material
-mat1PM = 7930.
-#First comparison Mold density kg/m^3: 316 steel
-mat2PM = 2700
-#Second comparison Mold density kg/m^3: aluminum 6061
-mat3PM = 8960
-#Third comparison Mold density kg/m^3: copper
-mat1CM = 510.
-#First comparison Mold specific heat 316 steel
-mat2CM = 896
-#Second comparison Mold specific heat aluminum
-mat3CM = 380
-#Third comparison Mold specific heat copper
-mat1fancye = 0.00015
-#First comparison average height of pipe surface irregularities (m) 316 steel
-mat2fancye =  0.000001
-#Second comparison average height of pipe surface irregularities (m) aluminum
-mat3fancye = 0.000001
-#Third comparison average height of pipe surface irregularities (m) copper
-mat1KM = 16.5
-#First comparison thermal conductivity of mold: 316 steel
-mat2KM = 180
-#Second comparison thermal conductivity of mold: aluminum 6061
-mat3KM = 402
-#Third comparison thermal conductivity of mold: copper
+#the name of the import can be changed to use other data
+import basedata as data
 
 def FVfunc(CVV, D): 
 	FV = (CVV*0.001)/(np.pi*(D/2)**2)
@@ -108,7 +38,7 @@ def DFfunc(fancye,D,RE):
 
 def DBNU(RE,PR):
 	NU = (0.023*RE**0.8)*PR**0.4
-#Ditus-Boelter heat transfer coefficent correlation
+#Dittus-Boelter heat transfer coefficent correlation
 	return NU
 def GNU(DF,RE,PR):
 	NU = ((DF/8)*(RE-1000)*PR)/(1+(12.7*((DF/8)**0.5)*(PR**(2/3)-1)))
@@ -142,141 +72,142 @@ def pdropfunc(DF,L,D,PC,CVV):
 if programfunction == "M" or programfunction == "m" or programfunction == "N" or programfunction == "n" or programfunction == "H" or programfunction == "h":
 	savegraphs = input ("Would you like to save an image of the graphs? Y for yes, N for no: ")
 
-	FV = FVfunc(CVV, D)
+	FV = FVfunc(data.CVV, data.D)
 	print ("flow velocity:", FV)
 
-	KV = KVfunc(DV,PC)
+	KV = KVfunc(data.DV,data.PC)
 	print ("kinematic viscosity:", KV)
-
-	RE = REfunc(FV,D,KV)
+    
+	RE = RE = REfunc(FV,data.D,KV)
+    
 	print ("Reynolds number:", RE)
 
-	PR = PRfunc(DV,CC,KC)
+	PR = PRfunc(data.DV,data.CC,data.KC)
 	print ("Prandl number:", PR)
 
-	DF1 = DFfunc(mat1fancye,D,RE)
-	print ("Darcy friction factor (",moldmatname1,"):", DF1)
+	DF1 = DFfunc(data.mat1fancye,data.D,RE)
+	print ("Darcy friction factor (",data.moldmatname1,"):", DF1)
 
-	if programfunction == "M" or "m":
-		DF2 = DFfunc(mat2fancye,D,RE)
-		print ("Darcy friction factor (",moldmatname2,"):", DF2)
-	if programfunction == "M" or "m":
-		DF3 = DFfunc(mat3fancye,D,RE)   
-		print ("Darcy friction factor (",moldmatname3,"):", DF3)
+	if programfunction == "M" or programfunction == "m":
+		DF2 = DFfunc(data.mat2fancye,data.D,RE)
+		print ("Darcy friction factor (",data.moldmatname2,"):", DF2)
+	if programfunction == "M" or programfunction == "m":
+		DF3 = DFfunc(data.mat3fancye,data.D,RE)   
+		print ("Darcy friction factor (",data.moldmatname3,"):", DF3)
    
    
-	if programfunction == "M" or "m": 
-		h1 = htc(KC,D,GNU(DF1,RE,PR))
-		print ("heat transfer coefficient (",moldmatname1,"):", h1)
-		h2 = htc(KC,D,GNU(DF2,RE,PR))
-		print ("heat transfer coefficient (",moldmatname2,"):", h2)
-		h3 = htc(KC,D,GNU(DF3,RE,PR))
-		print ("heat transfer coefficient (",moldmatname3,"):", h3)
+	if programfunction == "M" or programfunction == "m": 
+		h1 = htc(data.KC,data.D,GNU(DF1,RE,PR))
+		print ("heat transfer coefficient (",data.moldmatname1,"):", h1)
+		h2 = htc(data.KC,data.D,GNU(DF2,RE,PR))
+		print ("heat transfer coefficient (",data.moldmatname2,"):", h2)
+		h3 = htc(data.KC,data.D,GNU(DF3,RE,PR))
+		print ("heat transfer coefficient (",data.moldmatname3,"):", h3)
 
 		
-	elif programfunction == "H" or "h":
-		h1 = htc(KC,D,DBNU(RE,PR))
+	elif programfunction == "H" or programfunction == "h":
+		h1 = htc(data.KC,data.D,DBNU(RE,PR))
 		print ("heat transfer coefficient (Ditus-Boelter):", h1)
-		h2 = htc(KC,D,GNU(DF1,RE,PR))
+		h2 = htc(data.KC,data.D,GNU(DF1,RE,PR))
 		print ("heat transfer coefficient (Gnielinski):", h2)
-		h3 = htc(KC,D,STNU(RE,PR,DV,WDV))
+		h3 = htc(data.KC,data.D,STNU(RE,PR,data.DV,data.WDV))
 		print ("heat transfer coefficient (Sieder-Tate):", h3)
 	
 	
-	elif programfunction == "N" or "n":
+	elif programfunction == "N" or programfunction == "n":
 		if heat_coefficient_correlation == "D":
-			h1 = htc(KC,D,DBNU(RE,PR))
+			h1 = htc(data.KC,data.D,DBNU(RE,PR))
 			print ("heat transfer coefficient", h1)
 		elif heat_coefficient_correlation == "G":
-			h2 = htc(KC,D,GNU(DF1,RE,PR))
+			h2 = htc(data.KC,data.D,GNU(DF1,RE,PR))
 			print ("heat transfer coefficient", h2)
 		elif heat_coefficient_correlation == "S":
-			h3 = htc(KC,D,DBNU(RE,PR,DV,WDV))
+			h3 = htc(data.KC,data.D,DBNU(RE,PR,data.DV,data.WDV))
 			print ("heat transfer coefficient", h3)
 	
 
-	if programfunction == "M" or "m": 
-		ATM1 = ATMfunc(PP,CP,LP,mat1KM,W,h1,D,LM,TMelt,TEject,TCycle,TC)
-		print ("temperature of the mold (",moldmatname1,"):", ATM1)
-		ATM2 = ATMfunc(PP,CP,LP,mat2KM,W,h2,D,LM,TMelt,TEject,TCycle,TC)
-		print ("temperature of the mold (",moldmatname2,"):", ATM2)
-		ATM3 = ATMfunc(PP,CP,LP,mat3KM,W,h3,D,LM,TMelt,TEject,TCycle,TC)
-		print ("temperature of the mold (",moldmatname3,"):", ATM3)
+	if programfunction == "M" or programfunction == "m": 
+		ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
+		print ("temperature of the mold (",data.moldmatname1,"):", ATM1)
+		ATM2 = ATMfunc(data.PP,data.CP,data.LP,data.mat2KM,data.W,h2,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
+		print ("temperature of the mold (",data.moldmatname2,"):", ATM2)
+		ATM3 = ATMfunc(data.PP,data.CP,data.LP,data.mat3KM,data.W,h3,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
+		print ("temperature of the mold (",data.moldmatname3,"):", ATM3)
 
 		
-	elif programfunction == "H" or "h":
-		ATM1 = ATMfunc(PP,CP,LP,mat1KM,W,h1,D,LM,TMelt,TEject,TCycle,TC)
+	elif programfunction == "H" or programfunction == "h":
+		ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
 		print ("temperature of the mold (Ditus-Boelter):", ATM1)
-		ATM2 = ATMfunc(PP,CP,LP,mat1KM,W,h2,D,LM,TMelt,TEject,TCycle,TC)
+		ATM2 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h2,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
 		print ("temperature of the mold (Gnielinski):", ATM2)
-		ATM3 = ATMfunc(PP,CP,LP,mat1KM,W,h3,D,LM,TMelt,TEject,TCycle,TC)
+		ATM3 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h3,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
 		print ("temperature of the mold (Sieder-Tate):", ATM3)
     
 	
-	elif programfunction == "N" or "n":
-		ATM1 = ATMfunc(PP,CP,LP,mat1KM,W,h1,D,LM,TMelt,TEject,TCycle,TC)
+	elif programfunction == "N" or programfunction == "n":
+		ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.mat1KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
 		print ("temperature of the mold:", ATM1)
 	#Average temperature of the mold
 	
 
-	if programfunction == "M" or "m":
-		TConstant1 = TConstantfunc(mat1PM,mat1CM,LM,mat1KM,W,h1,D)
-		TConstant2 = TConstantfunc(mat2PM,mat2CM,LM,mat2KM,W,h2,D)
-		TConstant3 = TConstantfunc(mat3PM,mat3CM,LM,mat3KM,W,h3,D)
-		print ("time constant (",moldmatname1,"):", TConstant1)
-		print ("time constant (",moldmatname2,"):", TConstant2)
-		print ("time constant (",moldmatname3,"):", TConstant3)
+	if programfunction == "M" or programfunction == "m":
+		TConstant1 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h1,data.D)
+		TConstant2 = TConstantfunc(data.mat2PM,data.mat2CM,data.LM,data.mat2KM,data.W,h2,data.D)
+		TConstant3 = TConstantfunc(data.mat3PM,data.mat3CM,data.LM,data.mat3KM,data.W,h3,data.D)
+		print ("time constant (",data.moldmatname1,"):", TConstant1)
+		print ("time constant (",data.moldmatname2,"):", TConstant2)
+		print ("time constant (",data.moldmatname3,"):", TConstant3)
 		
-	elif programfunction == "H" or "h":
-		TConstant1 = TConstantfunc(mat1PM,mat1CM,LM,mat1KM,W,h1,D)
-		TConstant2 = TConstantfunc(mat1PM,mat1CM,LM,mat1KM,W,h2,D)
-		TConstant3 = TConstantfunc(mat1PM,mat1CM,LM,mat1KM,W,h3,D)
+	elif programfunction == "H" or programfunction == "h":
+		TConstant1 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h1,data.D)
+		TConstant2 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h2,data.D)
+		TConstant3 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h3,data.D)
 		print ("time constant (Ditus-Boelter):", TConstant1)
 		print ("time constant (Gnielinski):", TConstant2)
 		print ("time constant (Sieder-Tate):", TConstant3)
 		
-	elif programfunction == "N" or "n":
-		TConstant1 = TConstantfunc(mat1PM,mat1CM,LM,mat1KM,W,h1,D)
+	elif programfunction == "N" or programfunction == "n":
+		TConstant1 = TConstantfunc(data.mat1PM,data.mat1CM,data.LM,data.mat1KM,data.W,h1,data.D)
 		print ("time constant", TConstant1)
 
 	#Time constant
 	
-	if programfunction == "M" or "m":
-		pdrop1 = pdropfunc(DF1,L,D,PC,CVV)
-		pdrop2 = pdropfunc(DF2,L,D,PC,CVV)
-		pdrop3 = pdropfunc(DF3,L,D,PC,CVV)
+	if programfunction == "M" or programfunction == "m":
+		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,data.CVV)
+		pdrop2 = pdropfunc(DF2,data.L,data.D,data.PC,data.CVV)
+		pdrop3 = pdropfunc(DF3,data.L,data.D,data.PC,data.CVV)
 
-		print ("coolant pressure drop (",moldmatname1,"):", pdrop1)
-		print ("coolant pressure drop (",moldmatname2,"):", pdrop2)
-		print ("coolant pressure drop (",moldmatname3,"):", pdrop3)
+		print ("coolant pressure drop (",data.moldmatname1,"):", pdrop1)
+		print ("coolant pressure drop (",data.moldmatname2,"):", pdrop2)
+		print ("coolant pressure drop (",data.moldmatname3,"):", pdrop3)
 
-	elif programfunction == "H" or "h" or "N" or "n":
-		pdrop1 = pdropfunc(DF1,L,D,PC,CVV)
+	elif programfunction == "H" or programfunction == "h" or programfunction == "N" or programfunction == "n":
+		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,data.CVV)
 		print ("coolant pressure drop:", pdrop1)
 
 		#coolant pressure drop
 		
-	x = np.linspace(0,100)
+	x = np.linspace(0,1000)
 
-	y1 = ATM1 + ((TMO-ATM1)*np.e**(-x/TConstant1))
+	y1 = ATM1 + ((data.TMO-ATM1)*np.e**(-x/TConstant1))
 	if programfunction == "M" or programfunction == "m" or programfunction == "H" or programfunction == "h":
-		y2 = ATM2 + ((TMO-ATM2)*np.e**(-x/TConstant2))
+		y2 = ATM2 + ((data.TMO-ATM2)*np.e**(-x/TConstant2))
 	if programfunction == "M" or programfunction == "m" or programfunction == "H" or programfunction == "h":
-		y3 = ATM3 + ((TMO-ATM3)*np.e**(-x/TConstant3))
+		y3 = ATM3 + ((data.TMO-ATM3)*np.e**(-x/TConstant3))
 
 	if programfunction == "M" or programfunction == "m":
-		plt.plot(x,y1,'r', ls=('dotted'), label=moldmatname1)
-		plt.plot(x,y2,'black', ls=('dotted'), label=moldmatname2)
-		plt.plot(x,y3,'b', ls=('dotted'), label=moldmatname3)
+		plt.plot(x,y1,'r', ls=('dotted'), label=data.moldmatname1)
+		plt.plot(x,y2,'black', ls=('dotted'), label=data.moldmatname2)
+		plt.plot(x,y3,'b', ls=('dotted'), label=data.moldmatname3)
 
 	elif programfunction == "H" or programfunction == "h":
 		plt.plot(x,y1,'r', ls=('dotted'), label='Ditus-Boelter')
 		plt.plot(x,y2,'black', ls=('dotted'), label='Gnielinski')
 		plt.plot(x,y3,'b', ls=('dotted'), label='Sieder-Tate')
 	elif programfunction == "N" or programfunction == "n":
-		plt.plot(x,y1,'r', ls=('dotted'), label=moldmatname1)
+		plt.plot(x,y1,'r', ls=('dotted'), label=data.moldmatname1)
     
-	plt.axis([0,25,13,20])
+	plt.axis([0,300,0,100])
 	plt.xlabel("Time (s) from beginning of heat cycling")
 	plt.ylabel("Average heat cycle temperature (C)")
 	plt.grid('both')
