@@ -12,7 +12,7 @@ if programfunction == "N" or programfunction == "n":
 import basedata as data
 
 def FVfunc(CVV, D): 
-	FV = (CVV*0.001)/(np.pi*(D/2)**2)
+	FV = (CVV*0.001)/(np.pi*((D/2)**2))
 	return FV
 #flow velocity of coolant m/s
 
@@ -64,9 +64,9 @@ def TConstantfunc(PM,CM,LM,KM,W,h,D):
 	TConstant = ((PM*CM*LM**2)/KM)*(1+(2.0*W*KM)/(h*D*LM*np.pi))
 	return TConstant
 #Time constant
-def pdropfunc(DF,L,D,PC,CVV):
-	pdrop = (DF*L/D)*(PC/2)*CVV**2
-	return pdrop
+def pdropfunc(DF,L,D,PC,FV):
+    pdrop = DF*(L/D)*(PC/2)*FV**2
+    return pdrop
 #Pressure drop
 	
 if programfunction == "M" or programfunction == "m" or programfunction == "N" or programfunction == "n" or programfunction == "H" or programfunction == "h":
@@ -119,11 +119,11 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 			h1 = htc(data.KC,data.D,DBNU(RE,PR))
 			print ("heat transfer coefficient", h1)
 		elif heat_coefficient_correlation == "G":
-			h2 = htc(data.KC,data.D,GNU(DF1,RE,PR))
-			print ("heat transfer coefficient", h2)
+			h1 = htc(data.KC,data.D,GNU(DF1,RE,PR))
+			print ("heat transfer coefficient", h1)
 		elif heat_coefficient_correlation == "S":
-			h3 = htc(data.KC,data.D,DBNU(RE,PR,data.DV,data.WDV))
-			print ("heat transfer coefficient", h3)
+			h1 = htc(data.KC,data.D,STNU(RE,PR,data.DV,data.WDV))
+			print ("heat transfer coefficient", h1)
 	
 
 	if programfunction == "M" or programfunction == "m": 
@@ -173,16 +173,16 @@ if programfunction == "M" or programfunction == "m" or programfunction == "N" or
 	#Time constant
 	
 	if programfunction == "M" or programfunction == "m":
-		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,data.CVV)
-		pdrop2 = pdropfunc(DF2,data.L,data.D,data.PC,data.CVV)
-		pdrop3 = pdropfunc(DF3,data.L,data.D,data.PC,data.CVV)
+		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,FV)
+		pdrop2 = pdropfunc(DF2,data.L,data.D,data.PC,FV)
+		pdrop3 = pdropfunc(DF3,data.L,data.D,data.PC,FV)
 
 		print ("coolant pressure drop (",data.moldmatname1,"):", pdrop1)
 		print ("coolant pressure drop (",data.moldmatname2,"):", pdrop2)
 		print ("coolant pressure drop (",data.moldmatname3,"):", pdrop3)
 
 	elif programfunction == "H" or programfunction == "h" or programfunction == "N" or programfunction == "n":
-		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,data.CVV)
+		pdrop1 = pdropfunc(DF1,data.L,data.D,data.PC,FV)
 		print ("coolant pressure drop:", pdrop1)
 
 		#coolant pressure drop
