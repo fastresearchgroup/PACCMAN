@@ -1,0 +1,25 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{times}
+\usepackage{changepage}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{sidecap}
+\usepackage{graphicx}
+\usepackage[document]{ragged2e}
+\usepackage{amsmath}
+\DeclareMathSizes{12}{10}{10}{6}
+\usepackage{geometry}
+ \geometry{
+ top=35mm,
+ }
+
+\begin{document}
+\pagenumbering{gobble}
+\setlength{\parindent}{0em}
+\doublespacing
+\captionsetup{labelformat=empty}
+
+This folder contains two samples of data for use in the Paccman program. The variables within the "mazurcomparison" file are pulled from the 2017 paper: "Numerical and experimental evaluation of a conformally cooled H13 steel injection mould manufactured with selective laser melting" by Maciej Mazur, Paul Brincat, Martin Leary, and Milan Brandt. The data contained by the "xucomparison" file contains values from the 2001 paper: The Design of Conformal Cooling Channels in Injection Molding Tooling" by Xiorong Xu, Emanuel Sachs, and Samuel Allen. A comparison between both papers' experimentally found data and the resulting values from the use of their variables with the Paccman program  shows the accuracy of this software.
+
+\end{document}
