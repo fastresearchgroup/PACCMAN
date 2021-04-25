@@ -103,7 +103,7 @@ class TestClass:
 		return testTConstant
 	
 	def testpdrop(self):
-		testpdrop = pdropfunc(0.010906214575733224,testL,testD,testPC,testCVV)
-		assert testpdrop == 64.51209687989939
+		testpdrop = pdropfunc(0.010906214575733224,testL,testD,testPC,11.561015066195278)
+		assert testpdrop == 167332.91558708664
 		return testpdrop
 
