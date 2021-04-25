@@ -73,7 +73,22 @@ The program is written so that by changing the variables, it can analyize any de
 \begin{adjustwidth}{1cm}{}
 
 flow velocity, kinematic viscosity, Reynolds number, Prandl number, Darcy friction factor, heat transfer coefficient, average heat cycle temperature of the mold, time constant, and coolant pressure drop.
+
 \end{adjustwidth}
+\clearpage
+
+\section*{Multiple Variables / Arrays}
+
+Arrays can be used in this program to compare either multiple values for a single variable or multiple values for multiple values.
+
+\medskip
+
+When comparing multiple values for a single variable, use a NumPy array and the program will compare the efficacy of the values entered.
+
+\medskip 
+
+When inputting multiple values for multiple variables, the number of values in each array must be the same. The values in array position 1 will always do arithmetic from the other values in position 1, the values in position 2 work with the other values in position 2, etc.. The final results that the program give will be the same as the number of array variables, which must be the same for every array. A recommended use of this is  comparing different materials for the mold, coolant, or part and putting all the material properties of the same material in the same array slot.
+
 \clearpage
 
 \section*{Application Fundamentals for Advanced Use:}
