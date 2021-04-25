@@ -7,7 +7,7 @@ if programfunction == "N" or programfunction == "n":
     heat_coefficient_correlation = input("Please choose a heat transfer correllation. D for Dittus-Boelter, G for Gnielinski, S for Sieder-Tate: ")
 
 #the name of the import can be changed to use other data
-from . import basedata as data
+import basedata as data
 
 allvariables = [data.TC, data.PP, data.CP, data.LP, data.W, data.D, data.LM, data.TMelt, data.TEject, data.TCycle, data.TMO, data.CVV, data.DV, data.WDV, data.CP, data.KC, data.CC, data.PC, data.L]
 
