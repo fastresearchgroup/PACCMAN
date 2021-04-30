@@ -170,6 +170,7 @@ if programfunction == "N" or programfunction == "n" or programfunction == "H" or
         plt.plot(x,y2,'black', ls=('dotted'), label='Gnielinski')
         plt.plot(x,y3,'b', ls=('dotted'), label='Sieder-Tate')
         plt.xlabel("Time (s) from beginning of heat cycling")
+
     elif programfunction == "H" or programfunction == "h":
         plt.plot(x,y1,'r', ls=('none'), marker="o", markersize=7, label='Ditus-Boelter')
         plt.plot(x,y2,'black', ls=('none'), marker="o", markersize=7, label='Gnielinski')
