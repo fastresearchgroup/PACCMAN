@@ -29,6 +29,7 @@
 
 \bigskip
 
+
 This guide is meant to be used as a resource for using, adding to, or integrating the PACCMAN program. 
 It is expected that users will have a package manager such as Anaconda or another program with Numpy, Scipy, Matplotlib, etc.
 
@@ -39,6 +40,12 @@ In order to install Pytest with Anaconda, open the Anaconda Powershell Prompt an
 \medskip
 
 Feedback is welcome. Please report all bugs to hughfeehan353 on Github. Thanks.
+
+\section*{Introduction:}
+
+This program is designed to aid in the optimization and design of conformal cooling molds. While sample variables are included, its main use is for user-provided data. From the chosen data file, PACCMAN performs functions and provides outputs of information about the mold that the inputted data describes. The outputs can then be compared to another design to determine which is the most efficent or saved as estimations of a particular mold's characteristics. A NumPy array can also be used as an input variable to see how different values of a  variable affect the mold's performance. Multiple arrays can be used to compare things like the mold material that have multiple material property variables. However, it is important to  consider that each variable for a specific material must be put in the same position in the arrays.
+
+\clearpage
 
 \section*{Basic Use:}
 
@@ -59,13 +66,15 @@ Choosing "Y", downloads the graph in .png and .eps formats.
 
 Choosing "N" will not download the graphs
 \end{adjustwidth}
+
 \clearpage
 
 \medskip
 \begin{center}
 \begin{figure}
-\includegraphics[width=\linewidth]{paccman-example-graph.png}
-\caption{An example graph for option "M" (mold material comparison). }
+\centering
+\includegraphics[width=12cm]{paccman-example-graph.png}
+\caption{An example graph of the PACCMAN results. }
 \end{figure}
 \end{center}
 
