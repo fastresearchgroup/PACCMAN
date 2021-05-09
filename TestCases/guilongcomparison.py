@@ -4,7 +4,7 @@ PP = 1059.2
 #density of plastic part kg/m^3
 CP = 1903
 #specific heat capacity of plastic part J/KG*K
-LP = 0.0015
+LP = 0.003/2
 #half the plastic part thickness m
 W = 0.015
 #cooling line pitch distance m
@@ -20,7 +20,7 @@ TCycle = 60
 #Cycle time seconds
 TMO = 250
 #Initial mold temperature
-CVV = 0.16
+CVV = 0.157
 #coolant velocity liters/sec
 DV = 9.82*10**-4
 #coolant dynamic viscosity
@@ -35,13 +35,13 @@ CC = 4186
 L = 1.15
 #coolant line length
 
-moldmatname = "1045 Steel" 
+moldmatname = "6262 Aluminum" 
 #name of first mold material
-PM = 7850
+PM = 2810
 #First comparison Mold density kg/m^3
-CM = 486
+CM = 960
 #First comparison Mold specific heat
-fancye = 0.0004
+fancye = 0.001 * 10**-3
 #First comparison average height of pipe surface irregularities (m) 
-KM = 49.8
+KM = 130
 #First comparison thermal conductivity of mold
