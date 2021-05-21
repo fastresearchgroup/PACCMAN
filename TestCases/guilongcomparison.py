@@ -35,13 +35,33 @@ CC = 4186
 L = 1.15
 #coolant line length
 
-moldmatname = "6262 Aluminum" 
+moldmatname1 = "6262 Aluminum" 
 #name of first mold material
-PM = 2810
+moldmatname2 = "6262 Aluminum" 
+#name of second mold material
+moldmatname3 = "6262 Aluminum" 
+#name of third mold material
+mat1PM = 2810
 #First comparison Mold density kg/m^3
-CM = 960
+mat2PM = 2810
+#Second comparison Mold density kg/m^3
+mat3PM = 2810
+#Third comparison Mold density kg/m^
+mat1CM = 960
 #First comparison Mold specific heat
-fancye = 0.001 * 10**-3
+mat2CM = 960
+#Second comparison Mold specific heat
+mat3CM = 960
+#Third comparison Mold specific heat
+mat1fancye = 0.001 * 10**-3
 #First comparison average height of pipe surface irregularities (m) 
-KM = 130
+mat2fancye = 0.001 * 10**-3
+#Second comparison average height of pipe surface irregularities (m)
+mat3fancye = 0.001 * 10**-3
+#Third comparison average height of pipe surface irregularities (m)
+mat1KM = 130
 #First comparison thermal conductivity of mold
+mat2KM = 130
+#Second comparison thermal conductivity of mold
+mat3KM = 130
+#Third comparison thermal conductivity of mold
