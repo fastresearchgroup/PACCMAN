@@ -40,11 +40,11 @@ testCC = 4187
 #specific heat capacity of coolant
 testL = 1.15
 #coolant line length
-testPM = 7930.
+testrho_m = 7930.
 #First comparison Mold density kg/m^3: 316 steel
-testCM = 510.
+testCp_m = 510.
 #First comparison Mold specific heat 316 steel
-testfancye = 0.00015
+testeps = 0.00015
 #First comparison average height of pipe surface irregularities (m) 316 steel
 testKM = 16.5
 #First comparison thermal conductivity of mold: 316 steel
@@ -83,7 +83,7 @@ class TestClass:
 		return testPR
 	
 	def testDF(self):
-		testDF = DFfunc(testfancye,testD,57585.854486407814)
+		testDF = DFfunc(testeps,testD,57585.854486407814)
 		assert testDF == 0.010906214575733224
 		return testDF
 	
@@ -98,7 +98,7 @@ class TestClass:
 		return testATM
 	
 	def testTConstant(self):
-		testTConstant = TConstantfunc(testPM,testCM,testLM,testKM,testW,28621.292587276246,testD)
+		testTConstant = TConstantfunc(testrho_m,testCp_m,testLM,testKM,testW,28621.292587276246,testD)
 		assert testTConstant == 4.641400260500878
 		return testTConstant
 	

@@ -37,11 +37,11 @@ L = 1.15
 
 moldmatname = "6262 Aluminum" 
 #name of first mold material
-PM = 2810
+rho_m = 2810
 #First comparison Mold density kg/m^3
-CM = 960
+Cp_m = 960
 #First comparison Mold specific heat
-fancye = 0.001 * 10**-3
+eps = 0.001 * 10**-3
 #First comparison average height of pipe surface irregularities (m) 
 KM = 130
 #First comparison thermal conductivity of mold
