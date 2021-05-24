@@ -37,11 +37,11 @@ L = 1.15
 
 moldmatname = "316 Stainless Steel" 
 #name of first mold material
-PM = 8000
+rho_m = 8000
 #First comparison Mold density kg/m^3
-CM = 520
+Cp_m = 520
 #First comparison Mold specific heat
-fancye = 45*10**-6
+eps = 45*10**-6
 #First comparison average height of pipe surface irregularities (m) 
 KM = 17
 #First comparison thermal conductivity of mold

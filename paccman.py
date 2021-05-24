@@ -46,8 +46,8 @@ def PRfunc(DV,CC,KC):
     return PR
 #Prandl number of coolant
 
-def DFfunc(fancye,D,RE):
-    DF = (1/(-1.8*np.log(((fancye/(3.7*D))**1.11)+(6.9/RE))))**2
+def DFfunc(eps,D,RE):
+    DF = (1/(-1.8*np.log(((eps/(3.7*D))**1.11)+(6.9/RE))))**2
     return DF
 #Darcy friction factor
 
@@ -75,8 +75,8 @@ def ATMfunc(PP,CP,LP,KM,W,h,D,LM,TMelt,TEject,TCycle,TC):
     return ATM
 #Average temperature of the mold
 
-def TConstantfunc(PM,CM,LM,KM,W,h,D):
-    TConstant = ((PM*CM*LM**2)/KM)*(1+(2.0*W*KM)/(h*D*LM*np.pi))
+def TConstantfunc(rho_m,Cp_m,LM,KM,W,h,D):
+    TConstant = ((rho_m*Cp_m*LM**2)/KM)*(1+(2.0*W*KM)/(h*D*LM*np.pi))
     return TConstant
 #Time constant
 def pdropfunc(DF,L,D,PC,FV):
@@ -99,7 +99,7 @@ if programfunction == "N" or programfunction == "n" or programfunction == "H" or
     PR = PRfunc(data.DV,data.CC,data.KC)
     print ("Prandl number:", PR)
 
-    DF = DFfunc(data.fancye,data.D,RE)
+    DF = DFfunc(data.eps,data.D,RE)
     print ("Darcy friction factor (",data.moldmatname,"):", DF)
         
     if programfunction == "H" or programfunction == "h":
@@ -136,15 +136,15 @@ if programfunction == "N" or programfunction == "n" or programfunction == "H" or
         #Average temperature of the mold
         
     if programfunction == "H" or programfunction == "h":
-        TConstant1 = TConstantfunc(data.PM,data.CM,data.LM,data.KM,data.W,h1,data.D)
-        TConstant2 = TConstantfunc(data.PM,data.CM,data.LM,data.KM,data.W,h2,data.D)
-        TConstant3 = TConstantfunc(data.PM,data.CM,data.LM,data.KM,data.W,h3,data.D)
+        TConstant1 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h1,data.D)
+        TConstant2 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h2,data.D)
+        TConstant3 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h3,data.D)
         print ("time constant (Ditus-Boelter):", TConstant1)
         print ("time constant (Gnielinski):", TConstant2)
         print ("time constant (Sieder-Tate):", TConstant3)
         
     elif programfunction == "N" or programfunction == "n":
-        TConstant1 = TConstantfunc(data.PM,data.CM,data.LM,data.KM,data.W,h1,data.D)
+        TConstant1 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h1,data.D)
         print ("time constant", TConstant1)
         #Time constant
 

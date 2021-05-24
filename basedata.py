@@ -44,11 +44,11 @@ L = 1.15
 
 moldmatname = "316 Steel" 
 #name of  mold material
-PM = 7930.
+rho_m = 7930.
 #Mold density kg/m^3: 316 steel
-CM = 510.
+Cp_m = 510.
 #Mold specific heat 316 steel
-fancye = 0.00015
+eps = 0.00015
 #average height of pipe surface irregularities (m) 316 steel
 KM = 16.5
 #thermal conductivity of mold: 316 steel
