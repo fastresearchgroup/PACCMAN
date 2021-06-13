@@ -49,16 +49,18 @@ This program is designed to aid in the optimization and design of conformal cool
 
 \section*{Basic Use:}
 
-When run, the program first presents two options.
+When run, if the input variables are for a mold with straight cooling geometry, the program first presents two options.
 \begin{adjustwidth}{1cm}{}
 Selecting "N" asks the user to choose a single heat transfer coefficient correlation.
 
 Selecting "H" compares the three heat transfer coefficient correlations.
 \end{adjustwidth}
 
+If the mold being analyzed has helical geometry, this option does not appear as there is only one heat transfer coefficient correlation.
+
 \medskip
 
-For both choices, the program asks the user if they would like to save graphs of the average heat cycle temperature over time.
+For all choices, the program asks the user if they would like to save graphs of the average heat cycle temperature over time.
 \begin{adjustwidth}{1cm}{}
 Choosing "Y", downloads the graph in .png and .eps formats.
 
