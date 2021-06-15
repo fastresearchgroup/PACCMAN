@@ -53,17 +53,17 @@ def DFfunc(eps,D,RE):
     return DF
 #Darcy friction factor
 
-def lamhelicalDFfunc(RE):
+def helicalDFfunc_lam(RE):
     DF = 64/RE
     return DF
 #Friction factor for helical coil with laminar flow
 
-def lambigvhelicalDFfunc(RE,D,CD):
-    DF = ((1+0.015*RE**0.75*(D/CD)**0.4)*64)/RE
+def helicalDFfunc_lam_bigv(RE,D,CD):
+    DF = (1+(0.015*(RE**(0.75))*((D/CD)**0.4)))*(64/RE)
     return DF
 #Friction factor for helical coil with laminar flow and big vortex
 
-def turbhelicalDFfunc(eps,RE,D,CD):
+def helicalDFfunc_turb(eps,RE,D,CD):
     DF = (0.1*(1.46*eps+100/RE)**0.25)*(1+0.11*RE**0.23*(D/CD)**0.14)
     return DF
 #Friction factor for helical coil with turbulent flow
@@ -86,12 +86,12 @@ def STNU(RE,PR,DV,WDV):
     return NU
 #Sieder-Tate nusselt number
 
-def helicalNUlowRE(DE,PR):
+def helicalNU_lam(DE,PR):
     NU = (2.153+0.318*DE**0.643)*PR**0.177
     return NU
 #Helical nusselt number
 
-def helicalNU(RE,PR,D,CD):
+def helicalNU_turb(RE,PR,D,CD):
     NU = 0.00619*RE**0.92*PR**0.4*(1+3.455*(D/CD))
     return NU
 #Helical nusselt number, reynolds number between 5000 and 100,000)
@@ -190,9 +190,9 @@ if programfunction == "N" or programfunction == "n" or programfunction == "H" or
         print ("Dean number:", DE)
         
         if 20 < DE < 2000 and 0.7 < PR < 175 and 0.0267 < data.D/data.CD < 0.0884:
-            h1 = htc(data.KC,data.D,helicalNUlowRE(DE,PR))
+            h1 = htc(data.KC,data.D,helicalNU_lam(DE,PR))
         elif 5000 < RE < 100000 and 0.7 < PR < 5 and 0.0267 < data.D/data.CD < 0.0884:
-            h1 = htc(data.KC,data.D,helicalNU(DE,PR,data.D,data.CD))
+            h1 = htc(data.KC,data.D,helicalNU_turb(DE,PR,data.D,data.CD))
         else:
             print ("Helical coil geometry invalid")
         
@@ -208,13 +208,13 @@ if programfunction == "N" or programfunction == "n" or programfunction == "H" or
         #Time constant
         
         if DE < 11.6:
-            DF = lamhelicalDFfunc(RE)
+            DF = helicalDFfunc_lam(RE)
             
         elif DE > 11.6 and RE < 10000:
-            DF = lambigvhelicalDFfunc(RE,data.D,data.CD)
+            DF = helicalDFfunc_lam_bigv(RE,data.D,data.CD)
             
         elif DE > 11.6 and RE > 10000:
-            DF = turbhelicalDFfunc(data.eps,RE,data.D,data.CD)
+            DF = helicalDFfunc_turb(data.eps,RE,data.D,data.CD)
         
         print ("Darcy friction factor (",data.moldmatname,"):", DF)
         #Darcy friction factor
