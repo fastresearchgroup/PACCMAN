@@ -119,23 +119,27 @@ class TestClass:
         testhelicalDF_lam2 = helicalDFfunc_lam_bigv(7912,12/112,1)
         assert isclose(testhelicalDF_lam, 0.07922, abs_tol=2.1e-3)
         assert isclose(testhelicalDF_lam2, 0.04899, abs_tol=1e-3)
+#data from Hydraulic Performance... (2001) by Xu, et al. pulled with WebPlotDigitizer
         
     def testhelicalDFfunc_turb(self):
         testhelicalDF_turb = helicalDFfunc_turb(0,10394,12/112,1)
         testhelicalDF_turb2 = helicalDFfunc_turb(0,21310,12/112,1)
         assert isclose(testhelicalDF_turb, 0.05457, abs_tol=2.5e-3)
         assert isclose(testhelicalDF_turb2, 0.05246, abs_tol=5.5e-3)
-
+#data from Hydraulic Performance... (2001) by Xu, et al. pulled with WebPlotDigitizer
+        
     def testhelicalNU_lam(self):
         testhelicalNU_lam = helicalNU_lam(765.17,testPR)
         testhelicalNU_lam2 = helicalNU_lam(15.227,testPR)
         assert isclose(testhelicalNU_lam, 23.751*testPR**0.175, abs_tol=3)
         assert isclose(testhelicalNU_lam2, 3.9104*testPR**0.175, abs_tol=1.4e-1)
-
+#data from The Effects of... (1997) by Xin, et al. pulled with WebPlotDigitizer and tested using generic Prandtl
+        
     def testhelicalNU_turb(self):
         testhelicalNU_turb = helicalNU_turb(18152.641,testPR,testD,testCD)
         testhelicalNU_turb2 = helicalNU_turb(112074.9,testPR,testD,testCD)
         assert isclose(testhelicalNU_turb, 51.304*(testPR**0.4*(1+3.455*(testD/testCD))), abs_tol=1e-1)
         assert isclose(testhelicalNU_turb2, 279.538*(testPR**0.4*(1+3.455*(testD/testCD))), abs_tol=17)
+#data from The Effects of... (1997) by Xin, et al. pulled with WebPlotDigitizer and tested using generic Prandtl, Diameter, Coil Diameter
 
 
