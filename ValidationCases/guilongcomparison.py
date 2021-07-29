@@ -1,5 +1,7 @@
 #data pulled from: "Analysis of thermal cycling efficiency and optimal design of heating/coolingsystems for rapid heat cycle injection molding process" (2010) by Wang Guilong, Zhao Guoqun, Li Huiping, and Guan Yanjin.
 
+pipetype = "straight"
+
 TC = 20
 #coolant temperature celsius
 PP = 1059.2

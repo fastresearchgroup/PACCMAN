@@ -1,13 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-programfunction = input('Would you like to select a single heat transfer coefficient or view the results from multiple? Enter "N" to choose or "H" to compare: ' )
-
-if programfunction == "N" or programfunction == "n": 
-    heat_coefficient_correlation = input("Please choose a heat transfer correllation. D for Dittus-Boelter, G for Gnielinski, S for Sieder-Tate: ")
-
 #the name of the import can be changed to use other data
 import basedata as data
+
+if data.pipetype == "straight":
+    programfunction = input('Would you like to select a single heat transfer coefficient or view the results from multiple? Enter "N" to choose or "H" to compare: ' )
+    if programfunction == "N" or programfunction == "n": 
+        heat_coefficient_correlation = input("Please choose a heat transfer correllation. D for Dittus-Boelter, G for Gnielinski, S for Sieder-Tate: ")
+else:
+    programfunction = "N"
 
 allvariables = [data.TC, data.PP, data.CP, data.LP, data.W, data.D, data.LM, data.TMelt, data.TEject, data.TCycle, data.TMO, data.CVV, data.DV, data.WDV, data.CP, data.KC, data.CC, data.PC, data.L]
 
@@ -51,18 +53,48 @@ def DFfunc(eps,D,RE):
     return DF
 #Darcy friction factor
 
+def helicalDFfunc_lam(RE):
+    DF = 64/RE
+    return DF
+#Friction factor for helical coil with laminar flow
+
+def helicalDFfunc_lam_bigv(RE,D,CD):
+    DF = (1+(0.015*(RE**(0.75))*((D/CD)**0.4)))*(64/RE)
+    return DF
+#Friction factor for helical coil with laminar flow and big vortex
+
+def helicalDFfunc_turb(eps,RE,D,CD):
+    DF = (0.1*(1.46*eps+100/RE)**0.25)*(1+0.11*RE**0.23*(D/CD)**0.14)
+    return DF
+#Friction factor for helical coil with turbulent flow
+
+def DEfunc(RE,D,CD):
+    DE = RE*(D/CD)**0.5
+    return DE
+#Dean number
+
 def DBNU(RE,PR):
     NU = (0.023*RE**0.8)*PR**0.4
-#Dittus-Boelter heat transfer coefficent correlation
+#Dittus-Boelter nusselt number
     return NU
 def GNU(DF,RE,PR):
     NU = ((DF/8)*(RE-1000)*PR)/(1+(12.7*((DF/8)**0.5)*(PR**(2/3)-1)))
     return NU
-#Gnielinski heat transfer coefficent correlation
+#Gnielinski nusselt number
 def STNU(RE,PR,DV,WDV):
     NU = 0.027*(RE**(4/5))*(PR**(1/3))*((DV/WDV)**0.14)
     return NU
-#Sieder-Tate heat transfer coefficent correlation
+#Sieder-Tate nusselt number
+
+def helicalNU_lam(DE,PR):
+    NU = (2.153+0.318*DE**0.643)*PR**0.177
+    return NU
+#Helical nusselt number
+
+def helicalNU_turb(RE,PR,D,CD):
+    NU = 0.00619*RE**0.92*PR**0.4*(1+3.455*(D/CD))
+    return NU
+#Helical nusselt number, reynolds number between 5000 and 100,000)
     
 def htc(KC,D,NU):
     h = (KC/D)* NU
@@ -98,59 +130,98 @@ if programfunction == "N" or programfunction == "n" or programfunction == "H" or
 
     PR = PRfunc(data.DV,data.CC,data.KC)
     print ("Prandl number:", PR)
-
-    DF = DFfunc(data.eps,data.D,RE)
-    print ("Darcy friction factor (",data.moldmatname,"):", DF)
-        
-    if programfunction == "H" or programfunction == "h":
-        h1 = htc(data.KC,data.D,DBNU(RE,PR))
-        print ("heat transfer coefficient (Ditus-Boelter):", h1)
-        h2 = htc(data.KC,data.D,GNU(DF,RE,PR))
-        print ("heat transfer coefficient (Gnielinski):", h2)
-        h3 = htc(data.KC,data.D,STNU(RE,PR,data.DV,data.WDV))
-        print ("heat transfer coefficient (Sieder-Tate):", h3)
     
-    elif programfunction == "N" or programfunction == "n":
-        if heat_coefficient_correlation == "D":
+    if data.pipetype == "straight":
+        DF = DFfunc(data.eps,data.D,RE)
+        print ("Darcy friction factor (",data.moldmatname,"):", DF) 
+       
+        if programfunction == "H" or programfunction == "h":
             h1 = htc(data.KC,data.D,DBNU(RE,PR))
-            print ("heat transfer coefficient", h1)
-        elif heat_coefficient_correlation == "G":
-            h1 = htc(data.KC,data.D,GNU(DF,RE,PR))
-            print ("heat transfer coefficient", h1)
-        elif heat_coefficient_correlation == "S":
-            h1 = htc(data.KC,data.D,STNU(RE,PR,data.DV,data.WDV))
-            print ("heat transfer coefficient", h1)
+            print ("heat transfer coefficient (Ditus-Boelter):", h1)
+            h2 = htc(data.KC,data.D,GNU(DF,RE,PR))
+            print ("heat transfer coefficient (Gnielinski):", h2)
+            h3 = htc(data.KC,data.D,STNU(RE,PR,data.DV,data.WDV))
+            print ("heat transfer coefficient (Sieder-Tate):", h3)
+    
+        elif programfunction == "N" or programfunction == "n":
+            if heat_coefficient_correlation == "D":
+                h1 = htc(data.KC,data.D,DBNU(RE,PR))
+                print ("heat transfer coefficient", h1)
+            elif heat_coefficient_correlation == "G":
+                h1 = htc(data.KC,data.D,GNU(DF,RE,PR))
+                print ("heat transfer coefficient", h1)
+            elif heat_coefficient_correlation == "S":
+                h1 = htc(data.KC,data.D,STNU(RE,PR,data.DV,data.WDV))
+                print ("heat transfer coefficient", h1)
             #heat transfer coefficient
         
-    if programfunction == "H" or programfunction == "h":
-        ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
-        print ("temperature of the mold (Ditus-Boelter):", ATM1)
-        ATM2 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h2,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
-        print ("temperature of the mold (Gnielinski):", ATM2)
-        ATM3 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h3,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
-        print ("temperature of the mold (Sieder-Tate):", ATM3)
+        if programfunction == "H" or programfunction == "h":
+            ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
+            print ("temperature of the mold (Ditus-Boelter):", ATM1)
+            ATM2 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h2,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
+            print ("temperature of the mold (Gnielinski):", ATM2)
+            ATM3 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h3,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
+            print ("temperature of the mold (Sieder-Tate):", ATM3)
     
-    elif programfunction == "N" or programfunction == "n":
+        elif programfunction == "N" or programfunction == "n":
+            ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
+            print ("temperature of the mold:", ATM1)
+        #Average temperature of the mold
+        
+        if programfunction == "H" or programfunction == "h":
+            TConstant1 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h1,data.D)
+            TConstant2 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h2,data.D)
+            TConstant3 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h3,data.D)
+            print ("time constant (Ditus-Boelter):", TConstant1)
+            print ("time constant (Gnielinski):", TConstant2)
+            print ("time constant (Sieder-Tate):", TConstant3)
+        
+        elif programfunction == "N" or programfunction == "n":
+            TConstant1 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h1,data.D)
+            print ("time constant", TConstant1)
+        #Time constant
+
+        pdrop = pdropfunc(DF,data.L,data.D,data.PC,FV)
+        print ("coolant pressure drop:", pdrop)
+    #coolant pressure drop
+    
+    elif data.pipetype == "helical":
+        DE = DEfunc(RE,data.D,data.CD)
+        print ("Dean number:", DE)
+        
+        if 20 < DE < 2000 and 0.7 < PR < 175 and 0.0267 < data.D/data.CD < 0.0884:
+            h1 = htc(data.KC,data.D,helicalNU_lam(DE,PR))
+        elif 5000 < RE < 100000 and 0.7 < PR < 5 and 0.0267 < data.D/data.CD < 0.0884:
+            h1 = htc(data.KC,data.D,helicalNU_turb(DE,PR,data.D,data.CD))
+        else:
+            print ("Helical coil geometry invalid")
+        
+        print ("heat transfer coefficient", h1)
+        #heat transfer coefficient
+        
         ATM1 = ATMfunc(data.PP,data.CP,data.LP,data.KM,data.W,h1,data.D,data.LM,data.TMelt,data.TEject,data.TCycle,data.TC)
         print ("temperature of the mold:", ATM1)
         #Average temperature of the mold
         
-    if programfunction == "H" or programfunction == "h":
-        TConstant1 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h1,data.D)
-        TConstant2 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h2,data.D)
-        TConstant3 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h3,data.D)
-        print ("time constant (Ditus-Boelter):", TConstant1)
-        print ("time constant (Gnielinski):", TConstant2)
-        print ("time constant (Sieder-Tate):", TConstant3)
-        
-    elif programfunction == "N" or programfunction == "n":
         TConstant1 = TConstantfunc(data.rho_m,data.Cp_m,data.LM,data.KM,data.W,h1,data.D)
         print ("time constant", TConstant1)
         #Time constant
-
-    pdrop = pdropfunc(DF,data.L,data.D,data.PC,FV)
-    print ("coolant pressure drop:", pdrop)
-    #coolant pressure drop
+        
+        if DE < 11.6:
+            DF = helicalDFfunc_lam(RE)
+            
+        elif DE > 11.6 and RE < 10000:
+            DF = helicalDFfunc_lam_bigv(RE,data.D,data.CD)
+            
+        elif DE > 11.6 and RE > 10000:
+            DF = helicalDFfunc_turb(data.eps,RE,data.D,data.CD)
+        
+        print ("Darcy friction factor (",data.moldmatname,"):", DF)
+        #Darcy friction factor
+        
+        pdrop = pdropfunc(DF,data.L,data.D,data.PC,FV)
+        print ("coolant pressure drop:", pdrop)
+        #Pressure drop
         
     if arraynumber == 1:
         x = eval("data." + xvariable)

@@ -5,6 +5,9 @@ import numpy as np
 
 #TC = np.array([15, 20, 25])
 
+pipetype = "straight"
+#"straight" or "helical"
+
 TC = 15
 #coolant temperature celsius
 PP = 980
@@ -52,3 +55,7 @@ eps = 0.00015
 #average height of pipe surface irregularities (m) 316 steel
 KM = 16.5
 #thermal conductivity of mold: 316 steel
+
+#Helical coil specific variables:
+CD = 0.057
+#coil diameter m

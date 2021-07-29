@@ -1,5 +1,7 @@
 #Data pulled from: "The Design of Conformal Cooling Channels in Injection Molding Tooling" (2001) by Xiorong Xu, Emanuel Sachs, and Samuel Allen.
 
+pipetype = "straight"
+
 TC = 15
 #coolant temperature celsius
 PP = 1060
